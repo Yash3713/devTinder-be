@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
@@ -65,7 +67,7 @@ const userSchema = new mongoose.Schema(
           );
           return duplicates.length === 0;
         },
-        message:"No Duplicates Allowed "
+        message: "No Duplicates Allowed ",
       },
     },
     about: {
@@ -79,6 +81,18 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+userSchema.methods.getJWT = async function () {
+  const user = this;
+  const token = await jwt.sign({ _id: user._id }, "Intheend@123", {
+    expiresIn: "1d",
+  });
+  return token;
+};
+userSchema.methods.validatePassword = async function (passwordInputByUser) {
+  const user = this ;
+  const isPasswordValid = bcrypt.compare(passwordInputByUser, user.password);
+  return isPasswordValid;
+};
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;

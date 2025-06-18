@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start":"node src/app.js",
-    "dev":"nodemon src/app.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.1",
-    "mongoose": "^8.7.1"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.1",
+    "validate": "^5.2.0"
   }
 }
