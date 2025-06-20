@@ -40,8 +40,9 @@ profileRouter.patch("/profile/edit/password", userAuth, async (req, res) => {
       throw new Error("Inavlid Details");
     }
     const loggedInUser = req.user;
-    req.body.password = await bcrypt.hash(req.body.password, 10);
-    loggedInUser.password = req.body.password;
+    const plainPassword = req.body.password;
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+    loggedInUser.password = hashedPassword;
     await loggedInUser.save();
     res.json({ message: "Password updated Sucesfully", data: loggedInUser });
   } catch (err) {
